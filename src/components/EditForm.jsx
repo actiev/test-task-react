@@ -44,15 +44,11 @@ class EditForm extends React.Component {
 
     const {action} = this.props;
 
-    const formatted = this.state.dob
-      ? moment(this.state.dob, 'YYYY-MM-DD').format('DD.MM.YYYY')
-      : false;
-
     action({
       id: this.props.data.id,
       first_name: this.state.first_name,
       last_name: this.state.last_name,
-      dob: formatted,
+      dob: this.state.dob,
       location: this.state.location,
     });
   };
@@ -60,6 +56,12 @@ class EditForm extends React.Component {
   onChange = e => {
     this.setState({
       [e.target.id]: e.target.value,
+    });
+  };
+
+  onChangeDate = e => {
+    this.setState({
+      [e.target.id]: moment(e.target.value, 'YYYY-MM-DD').format('DD.MM.YYYY'),
     });
   };
 
@@ -95,7 +97,7 @@ class EditForm extends React.Component {
               label="Date of birth"
               type="date"
               value={moment(this.state.dob, 'DD.MM.YYYY').format('YYYY-MM-DD')}
-              onChange={this.onChange}
+              onChange={this.onChangeDate}
             />
           </div>
           <div>
