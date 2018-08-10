@@ -15,7 +15,7 @@
   },
   "proxy": "http://localhost:3001",
   "scripts": {
-    "start": "concurrently \"node server\" \"NODE_PATH=./src react-scripts start\""
+    "start": "concurrently \"node server\" \"react-scripts start\""
   },
   "devDependencies": {
     "concurrently": "^3.5.1",

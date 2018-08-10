@@ -11,15 +11,7 @@ class App extends Component {
     addForm: true,
     openModal: false,
     editUser: null,
-    data: [
-      {
-        id: '1',
-        first_name: 'Bryant',
-        last_name: 'Castillon',
-        dob: '01.01.2001',
-        location: 'kiev',
-      },
-    ],
+    data: [],
   };
 
   componentDidMount() {

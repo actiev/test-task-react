@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -7,13 +7,18 @@ import TableBody from '@material-ui/core/TableBody';
 import Paper from '@material-ui/core/Paper';
 import moment from 'moment';
 
-class Summary extends Component {
+class Summary extends PureComponent {
   state = {
     data: this.props.data,
   };
 
-  componentWillReceiveProps(props) {
-    this.setState({data: props.data});
+  static getDerivedStateFromProps(props, state) {
+    if (props.data !== state.data) {
+      return {
+        data: props.data,
+      };
+    }
+    return null;
   }
 
   usersCounter = () => {
@@ -26,6 +31,8 @@ class Summary extends Component {
 
   getSumOldestUsers = () => {
     const usersAges = [];
+    const count = this.state.data.length >= 3 ? 3 : this.state.data.length;
+    let sum = 0;
 
     this.state.data.forEach(user => {
       usersAges.push(moment().diff(moment(user.dob, 'DD.MM.YYYY'), 'years'));
@@ -33,10 +40,11 @@ class Summary extends Component {
 
     usersAges.sort((a, b) => b - a);
 
-    if (usersAges.length > 3) {
-      return usersAges[0] + usersAges[1] + usersAges[2];
+    for (let i = 0; i < count; i++) {
+      sum += usersAges[i];
     }
-    return usersAges[0];
+
+    return sum;
   };
 
   getLongestInitials = () => {
